@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veículos</title>
+    <title>Detalhes do Veículo</title>
 </head>
 <style>
     table {
@@ -25,7 +24,6 @@
     }
 
     input[type=text],
-    input[type=number],
     select {
         width: 100%;
         padding: 12px 20px;
@@ -46,12 +44,16 @@
         border-radius: 4px;
         cursor: pointer;
     }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
 </style>
-
 <body>
-
-    <h2 style="margin: 0">Veículos</h2>
-
+    <div style="display: flex; justify-content: space-between; align-items: center">
+        <h2 style="margin: 0">Detalhes do Veículo: {{ veiculo.modelo }}</h2>
+        <a href="{% url 'home' %}">Voltar para Veículos</a>
+    </div>
     <div>
         <form method="POST">
             {% csrf_token %}
@@ -62,25 +64,22 @@
     <div>
         <table>
             <tr>
-                <th>Modelo</th>
-                <th>Ano de Fabricação</th>
-                <th>Placa</th>
-                <th></th>
+                <th>Nome do Acessório</th>
+                <th>Ações</th>
             </tr>
-            {% for veiculo in veiculos %}
+            {% for acessorio in acessorios %}
             <tr>
-                <td>{{ veiculo.modelo }}</td>
-                <td>{{ veiculo.anoFabricacao }}</td>
-                <td>{{ veiculo.placa }}</td>
+                <td>{{ acessorio.nome }}</td>
                 <td>
-                    <a href="{% url 'detalhesVeiculo' veiculo.id %}">Detalhes</a> /
-                    <a href="{% url 'editar' veiculo.id %}">Editar</a> / <a
-                        href="{% url 'deletar' veiculo.id %}">Deletar</a>
+                    <a href="{% url 'deletarAcessorio' acessorio.id %}">Excluir</a>
                 </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">Nenhum acessório cadastrado.</td>
             </tr>
             {% endfor %}
         </table>
     </div>
 </body>
-
 </html>
