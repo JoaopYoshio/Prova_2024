@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veículos</title>
+    <link rel="stylesheet" href="../templates/style.css">
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    input[type=text],
+    select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+        background-color: #45a049;
+    }
+
+    #formCadastro {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+</style>
+
+<body>
+    <div>
+        <form action="{% url 'salvar' %}" method="POST">
+            {% csrf_token%}
+            <label>Modelo:</label><br>
+            <input type="text" name="modelo"><br>
+            <labe>Ano de Fabricação:</label><br>
+                <input type="text" name="anoFabricacao">
+                <label>Placa:</label><br>
+                <input type="text" name="placa">
+        </form>
+        <input type="submit" value="Salvar">
+    </div>
+    <div>
+        <table>
+            <tr>
+                <th>Modelo</th>
+                <th>Ano de Fabricação</th>
+                <th>Placa</th>
+                <th></th>
+            </tr>
+            {% for veiculo in veiculos %}
+            <tr>
+                <td>{{ veiculo.modelo }}</td>
+                <td>{{ veiculo.anoFabricacao }}</td>
+                <td>{{ veiculo.placa }}</td>
+                <td><a href="{% url 'editar' veiculo.id%}">Editar</a> / <a href="{% url 'deletar' veiculo.id%}">Deletar</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+
+</html>
